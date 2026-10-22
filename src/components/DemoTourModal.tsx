@@ -65,13 +65,20 @@ export const DEMO_STEPS: DemoStep[] = [
   },
   {
     number: 6,
+    title: 'Live Talk (Samvaad) Face-to-Face Translation',
+    actionText: 'Open Live Talk Demo',
+    description: 'Two-person real-time interpreter: Hindi speaker says "मुझे दो दिन से बुखार है", app speaks Kannada, doctor replies, save phrase & see quiz summary.',
+    icon: Sparkles,
+  },
+  {
+    number: 7,
     title: 'Instant Adaptability: Switch to Marathi / Bengali',
     actionText: 'Switch Language',
     description: 'Switch native language to Marathi or Bengali; watch transliterations instantly update!',
     icon: Globe,
   },
   {
-    number: 7,
+    number: 8,
     title: 'Show Progress & Milestones',
     actionText: 'Open Progress Dashboard',
     description: 'View learned counts, quiz history, and unlocked Karnataka cultural badges.',

@@ -16,9 +16,11 @@ import {
   LogOut,
   User as UserIcon,
   CloudCheck,
+  Speech,
+  ShieldCheck,
 } from 'lucide-react';
 
-export type ActiveTab = 'scenarios' | 'quiz' | 'roleplay' | 'chatbot' | 'bridge' | 'progress';
+export type ActiveTab = 'scenarios' | 'livetalk' | 'quiz' | 'roleplay' | 'chatbot' | 'bridge' | 'progress' | 'selfcheck';
 
 interface HeaderProps {
   currentLanguage: string;
@@ -45,11 +47,13 @@ export const Header: React.FC<HeaderProps> = ({
 
   const navItems = [
     { id: 'scenarios', label: strings.tabs.scenarios, icon: BookOpen },
+    { id: 'livetalk', label: 'Live Talk (ಸಂವಾದ)', icon: Speech, isNew: true },
     { id: 'quiz', label: strings.tabs.quiz, icon: HelpCircle },
     { id: 'roleplay', label: strings.tabs.roleplay, icon: MessageSquareText },
     { id: 'chatbot', label: 'AI Chatbot', icon: Bot },
     { id: 'bridge', label: strings.tabs.bridge, icon: GitCompare },
     { id: 'progress', label: strings.tabs.progress, icon: Trophy, count: badgeCount },
+    { id: 'selfcheck', label: 'Self-Check', icon: ShieldCheck },
   ];
 
   return (
@@ -179,6 +183,11 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-stone-500'}`} />
                 <span>{item.label}</span>
+                {item.isNew && (
+                  <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[9px] bg-emerald-500 text-white font-extrabold tracking-wide uppercase">
+                    New
+                  </span>
+                )}
                 {item.count !== undefined && item.count > 0 && (
                   <span
                     className={`ml-1 px-1.5 py-0.2 rounded-full text-[10px] ${

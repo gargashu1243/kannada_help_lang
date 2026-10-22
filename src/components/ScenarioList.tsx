@@ -1,6 +1,15 @@
-import React, { useState } from 'react';
-import { SCENARIOS, BASE_PHRASES, ScenarioItem, getPhraseTranslation } from '../utils/kannada';
+import React, { useState, useEffect } from 'react';
+import {
+  SCENARIOS,
+  BASE_PHRASES,
+  ScenarioItem,
+  getPhraseTranslation,
+  loadSavedPhrases,
+  removeSavedPhrase,
+  SavedPhrase,
+} from '../utils/kannada';
 import { getLanguageConfig, UI_STRINGS } from '../data/languages';
+import { speakKannada, stopSpeaking } from '../utils/speech';
 import {
   Car,
   ShoppingBag,
@@ -17,6 +26,10 @@ import {
   Send,
   Loader2,
   CheckCircle,
+  Bookmark,
+  Volume2,
+  Trash2,
+  Gauge,
 } from 'lucide-react';
 
 interface ScenarioListProps {
@@ -48,6 +61,38 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
   const [isAskingAi, setIsAskingAi] = useState(false);
   const [customResult, setCustomResult] = useState<any | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
+
+  // My Phrases (Saved from Live Talk and Learner)
+  const [savedPhrases, setSavedPhrases] = useState<SavedPhrase[]>([]);
+  const [playingSavedId, setPlayingSavedId] = useState<string | null>(null);
+  const [showSavedPhrases, setShowSavedPhrases] = useState<boolean>(true);
+
+  useEffect(() => {
+    setSavedPhrases(loadSavedPhrases());
+    const handleUpdate = () => setSavedPhrases(loadSavedPhrases());
+    window.addEventListener('kannada_saved_phrases_updated', handleUpdate);
+    return () => window.removeEventListener('kannada_saved_phrases_updated', handleUpdate);
+  }, []);
+
+  const handlePlaySavedAudio = async (phrase: SavedPhrase, slow = false) => {
+    if (playingSavedId === phrase.id) {
+      stopSpeaking();
+      setPlayingSavedId(null);
+      return;
+    }
+    setPlayingSavedId(phrase.id);
+    await speakKannada(phrase.kannada, {
+      slow,
+      onStart: () => setPlayingSavedId(phrase.id),
+      onEnd: () => setPlayingSavedId(null),
+      onError: () => setPlayingSavedId(null),
+    });
+  };
+
+  const handleDeleteSavedPhrase = (id: string) => {
+    removeSavedPhrase(id);
+    setSavedPhrases(loadSavedPhrases());
+  };
 
   const langConfig = getLanguageConfig(currentLanguage);
   const strings = UI_STRINGS[currentLanguage] || UI_STRINGS.hi;
@@ -206,6 +251,119 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
           )}
         </div>
       )}
+
+      {/* My Saved Phrases Section (Saved from Live Talk and Scenarios) */}
+      <div className="bg-white rounded-3xl p-6 border border-stone-200/90 shadow-sm space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center">
+              <Bookmark className="w-5 h-5 text-amber-700 fill-current" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-stone-900 tracking-tight">
+                  My Saved Phrases (ನನ್ನ ವಾಕ್ಯಗಳು)
+                </h2>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900">
+                  {savedPhrases.length} {savedPhrases.length === 1 ? 'Phrase' : 'Phrases'}
+                </span>
+              </div>
+              <p className="text-xs text-stone-500 mt-0.5">
+                Phrases you bookmarked during Live Talk (Samvaad) and scenario practice.
+              </p>
+            </div>
+          </div>
+
+          {savedPhrases.length > 0 && (
+            <button
+              onClick={() => setShowSavedPhrases(!showSavedPhrases)}
+              className="text-xs font-bold text-red-700 hover:text-red-900 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-xl transition-colors"
+            >
+              {showSavedPhrases ? 'Hide List' : 'View List'}
+            </button>
+          )}
+        </div>
+
+        {savedPhrases.length === 0 ? (
+          <div className="p-4 rounded-2xl bg-stone-50 border border-dashed border-stone-300 text-center text-xs text-stone-500 space-y-1">
+            <p className="font-semibold text-stone-700">No saved phrases yet.</p>
+            <p>
+              Tap the <strong>Save Phrase</strong> bookmark button on any message in <strong>Live Talk (Samvaad)</strong> or scenario cards to build your personalized phrasebook!
+            </p>
+          </div>
+        ) : showSavedPhrases ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+            {savedPhrases.map(phrase => {
+              const isPlaying = playingSavedId === phrase.id;
+              return (
+                <div
+                  key={phrase.id}
+                  className="p-4 rounded-2xl border border-stone-200 bg-amber-50/30 hover:border-amber-400 hover:bg-amber-50/60 transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-[11px] text-stone-400 font-semibold mb-1">
+                      <span className="text-amber-800 bg-amber-100 px-2 py-0.5 rounded font-bold">
+                        {phrase.scenarioTitle || 'Live Talk'}
+                      </span>
+                      <button
+                        onClick={() => handleDeleteSavedPhrase(phrase.id)}
+                        className="text-stone-300 hover:text-red-600 p-1 rounded-md transition-colors"
+                        title="Remove from saved phrases"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    <div className="text-xl font-bold font-kannada text-stone-900 leading-snug mt-1">
+                      {phrase.kannada}
+                    </div>
+
+                    {phrase.transliteration && (
+                      <div className="text-xs font-semibold text-red-700 mt-1">
+                        {phrase.transliteration}
+                      </div>
+                    )}
+
+                    <div className={`text-xs text-stone-700 mt-1 font-medium ${langConfig.fontClass}`}>
+                      {phrase.meaning}
+                    </div>
+                  </div>
+
+                  {/* Audio buttons */}
+                  <div className="mt-3 pt-2.5 border-t border-amber-200/60 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => handlePlaySavedAudio(phrase, false)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs ${
+                          isPlaying
+                            ? 'bg-red-600 text-white animate-pulse'
+                            : 'bg-white hover:bg-amber-100 text-amber-950 border border-amber-300'
+                        }`}
+                      >
+                        <Volume2 className="w-3.5 h-3.5" />
+                        <span>Listen</span>
+                      </button>
+
+                      <button
+                        onClick={() => handlePlaySavedAudio(phrase, true)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-white hover:bg-amber-100 text-stone-700 border border-stone-200 transition-all"
+                        title="Listen slow"
+                      >
+                        <Gauge className="w-3.5 h-3.5 text-stone-500" />
+                        <span>Slow</span>
+                      </button>
+                    </div>
+
+                    <span className="text-[10px] text-stone-400">
+                      Saved {new Date(phrase.savedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
+      </div>
 
       {/* 6 Scenario Cards Grid */}
       <div className="space-y-4">

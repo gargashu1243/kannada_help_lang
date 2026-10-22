@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScenarioItem,
   BASE_PHRASES,
   PhraseItem,
   getPhraseTranslation,
+  saveCustomPhrase,
+  removeSavedPhrase,
+  isPhraseSaved,
+  loadSavedPhrases,
 } from '../utils/kannada';
 import { getLanguageConfig, UI_STRINGS } from '../data/languages';
 import { speakKannada, stopSpeech } from '../utils/speech';
@@ -16,8 +20,8 @@ import {
   ArrowLeft,
   Sparkles,
   Info,
-  Clock,
   Gauge,
+  Bookmark,
 } from 'lucide-react';
 
 interface PhraseLearnerProps {
@@ -43,6 +47,17 @@ export const PhraseLearner: React.FC<PhraseLearnerProps> = ({
   const [isSlowMode, setIsSlowMode] = useState<boolean>(false);
   const [ttsNotice, setTtsNotice] = useState<string | null>(null);
   const [showTransliteration, setShowTransliteration] = useState<boolean>(true);
+  const [savedIds, setSavedIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const list = loadSavedPhrases();
+    setSavedIds(list.map(p => p.id));
+    const handleUpdate = () => {
+      setSavedIds(loadSavedPhrases().map(p => p.id));
+    };
+    window.addEventListener('kannada_saved_phrases_updated', handleUpdate);
+    return () => window.removeEventListener('kannada_saved_phrases_updated', handleUpdate);
+  }, []);
 
   const langConfig = getLanguageConfig(currentLanguage);
   const strings = UI_STRINGS[currentLanguage] || UI_STRINGS.hi;
@@ -237,6 +252,34 @@ export const PhraseLearner: React.FC<PhraseLearnerProps> = ({
                 </span>
 
                 <div className="flex items-center gap-1.5">
+                  {/* Save phrase bookmark button */}
+                  <button
+                    onClick={() => {
+                      if (savedIds.includes(phrase.id)) {
+                        removeSavedPhrase(phrase.id);
+                      } else {
+                        saveCustomPhrase({
+                          id: phrase.id,
+                          kannada: phrase.kannada,
+                          meaning,
+                          transliteration,
+                          scenarioId: scenario.id,
+                          scenarioTitle: scenario.title,
+                          source: 'scenario',
+                        });
+                      }
+                    }}
+                    className={`p-1.5 rounded-xl transition-all ${
+                      savedIds.includes(phrase.id)
+                        ? 'text-amber-700 bg-amber-100/80 hover:bg-amber-200'
+                        : 'text-stone-300 hover:text-amber-600 hover:bg-stone-100'
+                    }`}
+                    title={savedIds.includes(phrase.id) ? 'Saved in My Phrases' : 'Save to My Phrases'}
+                    aria-label={`Save phrase ${phrase.kannada} to My Phrases`}
+                  >
+                    <Bookmark className={`w-5 h-5 ${savedIds.includes(phrase.id) ? 'fill-current' : ''}`} />
+                  </button>
+
                   {/* Mark learned button */}
                   <button
                     onClick={() => onToggleLearned(phrase.id)}

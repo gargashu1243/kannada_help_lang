@@ -754,3 +754,134 @@ async function fallbackToBrowserSpeech(
     }
   });
 }
+
+/**
+ * Check if the browser supports the Web Speech API SpeechRecognition
+ */
+export function isSpeechRecognitionSupported(): boolean {
+  if (typeof window === 'undefined') return false;
+  return 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
+}
+
+/**
+ * Maps app language codes to BCP-47 speech recognition locales
+ */
+export function getSpeechRecognitionLocale(langCode: string): string {
+  switch (langCode) {
+    case 'kn':
+      return 'kn-IN';
+    case 'hi':
+      return 'hi-IN';
+    case 'mr':
+      return 'mr-IN';
+    case 'bn':
+      return 'bn-IN';
+    case 'te':
+      return 'te-IN';
+    case 'ta':
+      return 'ta-IN';
+    case 'en':
+      return 'en-IN';
+    default:
+      return 'en-IN';
+  }
+}
+
+/**
+ * Speak text in any target language supported by the app.
+ * If language is Kannada ('kn'), delegates to high-fidelity speakKannada() (Gemini TTS + fallback).
+ * If another Indic language or English, uses SpeechSynthesis with the matching locale.
+ */
+export async function speakInLanguage(
+  text: string,
+  langCode: string,
+  options?: SpeakOptions
+): Promise<SpeakResult> {
+  const clean = text.trim();
+  if (!clean) {
+    options?.onError?.('No text provided to speak.');
+    return { success: false, hasVoice: false, note: 'Empty text' };
+  }
+
+  if (langCode === 'kn') {
+    return speakKannada(clean, options);
+  }
+
+  // Stop any ongoing speech
+  stopSpeaking();
+
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    const errorMsg = 'Speech synthesis is not supported on this device/browser.';
+    options?.onError?.(errorMsg, 'unsupported_browser');
+    return { success: false, hasVoice: false, note: errorMsg };
+  }
+
+  // Cancel prior
+  try {
+    window.speechSynthesis.cancel();
+  } catch {
+    // ignore
+  }
+
+  const locale = getSpeechRecognitionLocale(langCode);
+  const voices = await loadVoices();
+
+  // Find a voice matching the language code or prefix
+  const targetVoice = voices.find(
+    v =>
+      v.lang.toLowerCase() === locale.toLowerCase() ||
+      v.lang.toLowerCase().startsWith(langCode.toLowerCase())
+  ) || voices.find(v => v.lang.toLowerCase().includes('in')) || voices[0];
+
+  const utterance = new SpeechSynthesisUtterance(clean);
+  utterance.lang = locale;
+  utterance.rate = options?.slow ? 0.72 : 0.92;
+  utterance.pitch = 1.0;
+  if (targetVoice) utterance.voice = targetVoice;
+
+  return new Promise(resolve => {
+    let finished = false;
+    const timer = setTimeout(() => {
+      if (!finished) {
+        finished = true;
+        options?.onEnd?.();
+        resolve({ success: true, hasVoice: !!targetVoice });
+      }
+    }, Math.max(3500, clean.length * 120));
+
+    utterance.onstart = () => {
+      options?.onStart?.();
+    };
+
+    utterance.onend = () => {
+      if (!finished) {
+        finished = true;
+        clearTimeout(timer);
+        options?.onEnd?.();
+        resolve({ success: true, hasVoice: true });
+      }
+    };
+
+    utterance.onerror = (e) => {
+      if (!finished) {
+        finished = true;
+        clearTimeout(timer);
+        options?.onEnd?.();
+        options?.onError?.('Speech playback failed: ' + (e.error || 'error'));
+        resolve({ success: false, hasVoice: !!targetVoice });
+      }
+    };
+
+    try {
+      window.speechSynthesis.speak(utterance);
+    } catch (err: any) {
+      if (!finished) {
+        finished = true;
+        clearTimeout(timer);
+        options?.onError?.(err?.message || 'Speech failed');
+        resolve({ success: false, hasVoice: false });
+      }
+    }
+  });
+}
+

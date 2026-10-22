@@ -10,6 +10,8 @@ import { NativeBridgeView } from './components/NativeBridgeView';
 import { ProgressView } from './components/ProgressView';
 import { DemoTourModal } from './components/DemoTourModal';
 import { AudioTranscriberModal } from './components/AudioTranscriberModal';
+import { LiveTalkView } from './components/LiveTalkView';
+import { SelfCheckView } from './components/SelfCheckView';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import {
   SCENARIOS,
@@ -58,6 +60,19 @@ function KannadaSaathiApp() {
         setIsLangModalOpen(true);
       }
     }
+  }, []);
+
+  // Keyboard shortcut Ctrl+Shift+D or Cmd+Shift+D to toggle Self-Check
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+        e.preventDefault();
+        setSelectedScenario(null);
+        setActiveTab((prev) => (prev === 'selfcheck' ? 'scenarios' : 'selfcheck'));
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // When user logs in, load cloud progress if available
@@ -218,10 +233,15 @@ function KannadaSaathiApp() {
         handleStartRoleplay('hospital');
         break;
       case 6:
+        setSelectedScenario(null);
+        handleSelectLanguage('hi');
+        setActiveTab('livetalk');
+        break;
+      case 7:
         const nextLang = currentLanguage === 'hi' ? 'mr' : currentLanguage === 'mr' ? 'bn' : 'hi';
         handleSelectLanguage(nextLang);
         break;
-      case 7:
+      case 8:
         setSelectedScenario(null);
         setActiveTab('progress');
         break;
@@ -272,6 +292,17 @@ function KannadaSaathiApp() {
           </>
         )}
 
+        {activeTab === 'livetalk' && (
+          <LiveTalkView
+            currentLanguage={currentLanguage}
+            onSelectLanguage={handleSelectLanguage}
+            onNavigateToPhrases={() => {
+              setActiveTab('scenarios');
+              setSelectedScenario(null);
+            }}
+          />
+        )}
+
         {activeTab === 'quiz' && (
           <QuizView
             currentLanguage={currentLanguage}
@@ -308,6 +339,8 @@ function KannadaSaathiApp() {
             }}
           />
         )}
+
+        {activeTab === 'selfcheck' && <SelfCheckView />}
       </main>
 
       {/* Footer */}

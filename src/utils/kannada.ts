@@ -245,3 +245,69 @@ export function evaluateBadges(progress: UserProgress): string[] {
 
   return badges;
 }
+
+export interface SavedPhrase {
+  id: string;
+  kannada: string;
+  transliteration: string;
+  meaning: string;
+  scenarioId?: string;
+  scenarioTitle?: string;
+  savedAt: string;
+  source?: 'live_talk' | 'scenario' | 'custom';
+}
+
+const SAVED_PHRASES_KEY = 'kannada_saathi_saved_phrases_v1';
+
+export function loadSavedPhrases(): SavedPhrase[] {
+  try {
+    const raw = localStorage.getItem(SAVED_PHRASES_KEY);
+    if (raw) {
+      return JSON.parse(raw);
+    }
+  } catch (e) {
+    // ignore
+  }
+  return [];
+}
+
+export function saveCustomPhrase(phrase: Omit<SavedPhrase, 'id' | 'savedAt'> & { id?: string }): SavedPhrase {
+  const existing = loadSavedPhrases();
+  const id = phrase.id || `saved_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+  const newPhrase: SavedPhrase = {
+    ...phrase,
+    id,
+    savedAt: new Date().toISOString(),
+  };
+
+  // Prevent exact duplicates by Kannada text
+  const filtered = existing.filter(p => p.kannada.trim() !== phrase.kannada.trim());
+  const updated = [newPhrase, ...filtered];
+
+  try {
+    localStorage.setItem(SAVED_PHRASES_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('kannada_saved_phrases_updated', { detail: updated }));
+  } catch (e) {
+    // ignore
+  }
+
+  return newPhrase;
+}
+
+export function removeSavedPhrase(id: string): void {
+  const existing = loadSavedPhrases();
+  const updated = existing.filter(p => p.id !== id);
+  try {
+    localStorage.setItem(SAVED_PHRASES_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('kannada_saved_phrases_updated', { detail: updated }));
+  } catch (e) {
+    // ignore
+  }
+}
+
+export function isPhraseSaved(kannadaText: string): boolean {
+  const existing = loadSavedPhrases();
+  const clean = kannadaText.trim();
+  return existing.some(p => p.kannada.trim() === clean);
+}
+
