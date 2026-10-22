@@ -1,0 +1,482 @@
+{
+  "scenarios": [
+    {
+      "id": "travel",
+      "title": "Travel & Auto/Bus",
+      "titleKannada": "ಪ್ರಯಾಣ ಮತ್ತು ಆಟೋ/ಬಸ್",
+      "icon": "Car",
+      "color": "from-amber-500 to-red-600",
+      "badge": "Everyday Mobility",
+      "roleplayRole": "Auto Driver (Ramesh Anna)",
+      "roleplayIntro": "You are boarding an auto at Indiranagar Metro Station. Tell Ramesh Anna where you want to go and ask for the meter!"
+    },
+    {
+      "id": "shopping",
+      "title": "Shopping & Market",
+      "titleKannada": "ಶಾಪಿಂಗ್ ಮತ್ತು ತರಕಾರಿ ಮಾರುಕಟ್ಟೆ",
+      "icon": "ShoppingBag",
+      "color": "from-emerald-500 to-teal-700",
+      "badge": "Bargain & Buy",
+      "roleplayRole": "Vegetable Vendor (Manjula Akka)",
+      "roleplayIntro": "You are at Russell Market / Gandhi Bazaar buying vegetables. Ask prices, freshness, and bargain politely!"
+    },
+    {
+      "id": "hospital",
+      "title": "Hospital & Health",
+      "titleKannada": "ಆಸ್ಪತ್ರೆ ಮತ್ತು ಆರೋಗ್ಯ",
+      "icon": "HeartPulse",
+      "color": "from-rose-500 to-red-700",
+      "badge": "Care & Clinic",
+      "roleplayRole": "Clinic Receptionist (Preeti)",
+      "roleplayIntro": "You have arrived at a clinic in Jayanagar with mild fever and headache. Talk to receptionist Preeti about doctor availability and appointment."
+    },
+    {
+      "id": "college",
+      "title": "College & Education",
+      "titleKannada": "ಕಾಲೇಜು ಮತ್ತು ಶಿಕ್ಷಣ",
+      "icon": "GraduationCap",
+      "color": "from-blue-500 to-indigo-700",
+      "badge": "Campus Life",
+      "roleplayRole": "Classmate (Kiran)",
+      "roleplayIntro": "You are on campus near the library. Ask your senior or classmate Kiran about class schedules, canteen, and exam notes."
+    },
+    {
+      "id": "workplace",
+      "title": "Workplace & Office",
+      "titleKannada": "ಕಚೇರಿ ಮತ್ತು ಕೆಲಸ",
+      "icon": "Briefcase",
+      "color": "from-purple-500 to-violet-800",
+      "badge": "Tech & Team",
+      "roleplayRole": "Colleague (Suresh)",
+      "roleplayIntro": "You are at your Bengaluru tech office. Chat with team member Suresh about a project, invite him for coffee, and discuss meetings."
+    },
+    {
+      "id": "daily_life",
+      "title": "Daily Life & Neighbours",
+      "titleKannada": "ದೈನಂದಿನ ಜೀವನ ಮತ್ತು ನೆರೆಹೊರೆ",
+      "icon": "Home",
+      "color": "from-amber-600 to-yellow-600",
+      "badge": "Friendly Community",
+      "roleplayRole": "Apartment Neighbour (Shanthamma)",
+      "roleplayIntro": "Meet your apartment neighbour in the corridor. Greet her warmly, ask about water and garbage schedules, and mention you're learning Kannada."
+    }
+  ],
+  "phrases": [
+    {
+      "id": "travel_1",
+      "scenarioId": "travel",
+      "kannada": "ಮೀಟರ್ ಹಾಕಿ ಸರ್",
+      "english": "Please turn on the meter, sir.",
+      "englishTranslit": "Meter haaki sir",
+      "context": "Say this firmly and politely when boarding an auto rickshaw."
+    },
+    {
+      "id": "travel_2",
+      "scenarioId": "travel",
+      "kannada": "ಇಂದಿರಾನಗರಕ್ಕೆ ಎಷ್ಟು ಆಗುತ್ತೆ?",
+      "english": "How much will it cost to Indiranagar?",
+      "englishTranslit": "Indiranagarakke eshtu aagutte?",
+      "context": "To inquire about the fare before starting."
+    },
+    {
+      "id": "travel_3",
+      "scenarioId": "travel",
+      "kannada": "ಮುಂದೆ ಎಡಕ್ಕೆ ತಗೊಳ್ಳಿ",
+      "english": "Take a left ahead.",
+      "englishTranslit": "Munde edakke tagolli",
+      "context": "Giving directions to the driver (Edakke = Left)."
+    },
+    {
+      "id": "travel_4",
+      "scenarioId": "travel",
+      "kannada": "ಮುಂದೆ ಬಲಕ್ಕೆ ತಗೊಳ್ಳಿ",
+      "english": "Take a right ahead.",
+      "englishTranslit": "Munde balakke tagolli",
+      "context": "Giving directions to the driver (Balakke = Right)."
+    },
+    {
+      "id": "travel_5",
+      "scenarioId": "travel",
+      "kannada": "ಇಲ್ಲಿ ನಿಲ್ಲಿಸಿ",
+      "english": "Please stop here.",
+      "englishTranslit": "Illi nillisi",
+      "context": "When you have reached your destination."
+    },
+    {
+      "id": "travel_6",
+      "scenarioId": "travel",
+      "kannada": "ಈ ಬಸ್ ಮೆಜೆಸ್ಟಿಕ್‌ಗೆ ಹೋಗುತ್ತಾ?",
+      "english": "Does this bus go to Majestic?",
+      "englishTranslit": "Ee bus Majestic-ge hoguttaa?",
+      "context": "Asking the conductor or passengers at the BMTC bus stop."
+    },
+    {
+      "id": "travel_7",
+      "scenarioId": "travel",
+      "kannada": "ಮುಂದಿನ ನಿಲ್ದಾಣ ಯಾವುದು?",
+      "english": "Which is the next stop?",
+      "englishTranslit": "Mundina nildaana yaavudu?",
+      "context": "Asking in a BMTC bus or metro."
+    },
+    {
+      "id": "travel_8",
+      "scenarioId": "travel",
+      "kannada": "ಚಿಲ್ಲರೆ ಇಲ್ಲ, ಯುಪಿಐ ಮಾಡ್ತೀನಿ",
+      "english": "I don't have change, I will pay via UPI.",
+      "englishTranslit": "Chillare illa, UPI maadtini",
+      "context": "When paying for bus tickets or auto fare."
+    },
+    {
+      "id": "travel_9",
+      "scenarioId": "travel",
+      "kannada": "ಸ್ವಲ್ಪ ನಿಧಾನವಾಗಿ ಹೋಗಿ",
+      "english": "Please go a little slower.",
+      "englishTranslit": "Swalpa nidhaanavaagi hogi",
+      "context": "Requesting driver to drive carefully."
+    },
+    {
+      "id": "shopping_1",
+      "scenarioId": "shopping",
+      "kannada": "ಇದು ಎಷ್ಟು ರೂಪಾಯಿ?",
+      "english": "How much is this?",
+      "englishTranslit": "Idu eshtu roopaayi?",
+      "context": "Asking the price of any item."
+    },
+    {
+      "id": "shopping_2",
+      "scenarioId": "shopping",
+      "kannada": "ಸ್ವಲ್ಪ ಕಮ್ಮಿ ಮಾಡಿ",
+      "english": "Please reduce the price a little.",
+      "englishTranslit": "Swalpa kammi maadi",
+      "context": "The classic, polite Bengaluru bargaining phrase!"
+    },
+    {
+      "id": "shopping_3",
+      "scenarioId": "shopping",
+      "kannada": "ತಾಜಾ ಇದೆಯಾ?",
+      "english": "Is this fresh?",
+      "englishTranslit": "Taajaa ideyaa?",
+      "context": "Asking vegetable or fruit vendors."
+    },
+    {
+      "id": "shopping_4",
+      "scenarioId": "shopping",
+      "kannada": "ಒಂದು ಕೆಜಿ ಕೊಡಿ",
+      "english": "Please give one kilogram.",
+      "englishTranslit": "Ondu kg kodi",
+      "context": "Specifying quantity to vendor."
+    },
+    {
+      "id": "shopping_5",
+      "scenarioId": "shopping",
+      "kannada": "ಆನ್‌ಲೈನ್ ಪೇಮೆಂಟ್ ತಗೊಳ್ತೀರಾ?",
+      "english": "Do you accept online payment (UPI)?",
+      "englishTranslit": "Online payment tagoltiraa?",
+      "context": "Asking if QR code / phone payment is available."
+    },
+    {
+      "id": "shopping_6",
+      "scenarioId": "shopping",
+      "kannada": "ಇನ್ನೊಂದು ತೋರಿಸಿ",
+      "english": "Please show another one.",
+      "englishTranslit": "Innondu torisi",
+      "context": "Looking at clothes, vegetables, or goods."
+    },
+    {
+      "id": "shopping_7",
+      "scenarioId": "shopping",
+      "kannada": "ಬ್ಯಾಗ್ ಕೊಡ್ತೀರಾ?",
+      "english": "Will you give a carry bag?",
+      "englishTranslit": "Bag kodtiraa?",
+      "context": "Requesting a shopping bag at checkout."
+    },
+    {
+      "id": "shopping_8",
+      "scenarioId": "shopping",
+      "kannada": "ಬಿಲ್ಲು ಕೊಡಿ",
+      "english": "Please give the bill.",
+      "englishTranslit": "Billu kodi",
+      "context": "Asking for receipt or bill."
+    },
+    {
+      "id": "shopping_9",
+      "scenarioId": "shopping",
+      "kannada": "ಇದು ಬೇಡ, ಬೇರೆ ಕೊಡಿ",
+      "english": "I don't want this, give another one.",
+      "englishTranslit": "Idu beda, bere kodi",
+      "context": "Replacing an item."
+    },
+    {
+      "id": "hospital_1",
+      "scenarioId": "hospital",
+      "kannada": "ಡಾಕ್ಟರ್ ಯಾವಾಗ ಸಿಗ್ತಾರೆ?",
+      "english": "When will the doctor be available?",
+      "englishTranslit": "Doctor yaavaaga sigtaare?",
+      "context": "Asking at clinic reception desk."
+    },
+    {
+      "id": "hospital_2",
+      "scenarioId": "hospital",
+      "kannada": "ನನಗೆ ತಲೆನೋವು ಇದೆ",
+      "english": "I have a headache.",
+      "englishTranslit": "Nanage talenowu ide",
+      "context": "Describing symptom to nurse or doctor."
+    },
+    {
+      "id": "hospital_3",
+      "scenarioId": "hospital",
+      "kannada": "ನನಗೆ ಜ್ವರ ಬಂದಿದೆ",
+      "english": "I have a fever.",
+      "englishTranslit": "Nanage jwara bandide",
+      "context": "Informing doctor about fever."
+    },
+    {
+      "id": "hospital_4",
+      "scenarioId": "hospital",
+      "kannada": "ಹೊಟ್ಟೆ ನೋಯುತ್ತಿದೆ",
+      "english": "My stomach is hurting.",
+      "englishTranslit": "Hotte noyuttide",
+      "context": "Reporting abdominal pain."
+    },
+    {
+      "id": "hospital_5",
+      "scenarioId": "hospital",
+      "kannada": "ಮಾತ್ರೆ ಊಟದ ನಂತರ ತಗೋಬೇಕಾ?",
+      "english": "Should I take the medicine after meals?",
+      "englishTranslit": "Maatre ootada nantana tagobekaa?",
+      "context": "Checking dosage instructions at the pharmacy."
+    },
+    {
+      "id": "hospital_6",
+      "scenarioId": "hospital",
+      "kannada": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ತಗೋಬೇಕು",
+      "english": "I need to take an appointment.",
+      "englishTranslit": "Appointment tagobeku",
+      "context": "Booking a doctor consultation."
+    },
+    {
+      "id": "hospital_7",
+      "scenarioId": "hospital",
+      "kannada": "ಔಷಧಿ ಅಂಗಡಿ ಎಲ್ಲಿದೆ?",
+      "english": "Where is the pharmacy / medical store?",
+      "englishTranslit": "Aushadhi angadi ellide?",
+      "context": "Locating the medical counter."
+    },
+    {
+      "id": "hospital_8",
+      "scenarioId": "hospital",
+      "kannada": "ರಕ್ತ ಪರೀಕ್ಷೆ ಎಲ್ಲಿ ಮಾಡ್ತಾರೆ?",
+      "english": "Where do they do the blood test?",
+      "englishTranslit": "Rakta pareekshe elli maadtare?",
+      "context": "Asking for diagnostic lab directions."
+    },
+    {
+      "id": "hospital_9",
+      "scenarioId": "hospital",
+      "kannada": "ಸ್ವಲ್ಪ ನೀರು ಕೊಡ್ತೀರಾ?",
+      "english": "Could you please give some water?",
+      "englishTranslit": "Swalpa neeru kodtiraa?",
+      "context": "Polite request for drinking water."
+    },
+    {
+      "id": "college_1",
+      "scenarioId": "college",
+      "kannada": "ಕ್ಲಾಸ್ ಯಾವಾಗ ಶುರು ಆಗುತ್ತೆ?",
+      "english": "When does the class start?",
+      "englishTranslit": "Class yaavaaga shuru aagutte?",
+      "context": "Asking a peer or lab partner."
+    },
+    {
+      "id": "college_2",
+      "scenarioId": "college",
+      "kannada": "ಲೈಬ್ರರಿ ಎಲ್ಲಿ ಇದೆ?",
+      "english": "Where is the library located?",
+      "englishTranslit": "Library elli ide?",
+      "context": "Navigating the college campus."
+    },
+    {
+      "id": "college_3",
+      "scenarioId": "college",
+      "kannada": "ನೋಟ್ಸ್ ಕೊಡ್ತೀರಾ?",
+      "english": "Could you give me the lecture notes?",
+      "englishTranslit": "Notes kodtiraa?",
+      "context": "Borrowing study notes from a classmate."
+    },
+    {
+      "id": "college_4",
+      "scenarioId": "college",
+      "kannada": "ಕ್ಯಾಂಟೀನ್‌ಗೆ ಹೋಗೋಣ ಬನ್ನಿ",
+      "english": "Come, let's go to the canteen.",
+      "englishTranslit": "Canteen-ge hogona banni",
+      "context": "Inviting friends for snacks and tea."
+    },
+    {
+      "id": "college_5",
+      "scenarioId": "college",
+      "kannada": "ಪರೀಕ್ಷೆ ಯಾವಾಗ?",
+      "english": "When is the examination?",
+      "englishTranslit": "Pareekshe yaavaaga?",
+      "context": "Asking about exam timetable."
+    },
+    {
+      "id": "college_6",
+      "scenarioId": "college",
+      "kannada": "ಅಸೈನ್‌ಮೆಂಟ್ ಸಬ್ಮಿಟ್ ಮಾಡಿದ್ದೀರಾ?",
+      "english": "Have you submitted the assignment?",
+      "englishTranslit": "Assignment submit maadiddiraa?",
+      "context": "Checking deadline progress with classmates."
+    },
+    {
+      "id": "college_7",
+      "scenarioId": "college",
+      "kannada": "ಈ ಪ್ರಶ್ನೆ ಅರ್ಥ ಆಗಲಿಲ್ಲ",
+      "english": "I did not understand this question.",
+      "englishTranslit": "Ee prashne artha aagalilla",
+      "context": "Asking teacher or friend for explanation."
+    },
+    {
+      "id": "college_8",
+      "scenarioId": "college",
+      "kannada": "ನಾಳೆ ಕಾಲೇಜ್ ರಜಾ ಇದೆಯಾ?",
+      "english": "Is college holiday tomorrow?",
+      "englishTranslit": "Naale college rajaa ideyaa?",
+      "context": "Confirming a holiday announcement."
+    },
+    {
+      "id": "workplace_1",
+      "scenarioId": "workplace",
+      "kannada": "ಮೀಟಿಂಗ್ ಯಾವಾಗ ಇದೆ?",
+      "english": "When is the meeting scheduled?",
+      "englishTranslit": "Meeting yaavaaga ide?",
+      "context": "Checking daily scrum or sync time."
+    },
+    {
+      "id": "workplace_2",
+      "scenarioId": "workplace",
+      "kannada": "ಈ ಮೇಲ್ ಕಳುಹಿಸಿದ್ದೀನಿ",
+      "english": "I have sent this email.",
+      "englishTranslit": "Ee mail kaluhisiddini",
+      "context": "Confirming dispatch of important documents."
+    },
+    {
+      "id": "workplace_3",
+      "scenarioId": "workplace",
+      "kannada": "ಸ್ವಲ್ಪ ಸಹಾಯ ಮಾಡ್ತೀರಾ?",
+      "english": "Could you please help me a little?",
+      "englishTranslit": "Swalpa sahaaya maadtiraa?",
+      "context": "Requesting assistance on a bug or task."
+    },
+    {
+      "id": "workplace_4",
+      "scenarioId": "workplace",
+      "kannada": "ಕಾಫಿ ಕುಡಿಯೋಣ ಬನ್ನಿ",
+      "english": "Come, let's grab coffee.",
+      "englishTranslit": "Coffee kudiyona banni",
+      "context": "Classic Bengaluru filter coffee break invitation!"
+    },
+    {
+      "id": "workplace_5",
+      "scenarioId": "workplace",
+      "kannada": "ಇವತ್ತು ವರ್ಕ್ ಫ್ರಮ್ ಹೋಮ್ ಮಾಡ್ತೀನಿ",
+      "english": "Today I will work from home.",
+      "englishTranslit": "Ivattu work from home maadtini",
+      "context": "Informing teammate or team lead."
+    },
+    {
+      "id": "workplace_6",
+      "scenarioId": "workplace",
+      "kannada": "ಪ್ರಾಜೆಕ್ಟ್ ಡೆಡ್‌ಲೈನ್ ಯಾವಾಗ?",
+      "english": "When is the project deadline?",
+      "englishTranslit": "Project deadline yaavaaga?",
+      "context": "Asking project manager or lead."
+    },
+    {
+      "id": "workplace_7",
+      "scenarioId": "workplace",
+      "kannada": "ಮ್ಯಾನೇಜರ್ ಜೊತೆ ಮಾತಾಡಬೇಕು",
+      "english": "I need to speak with the manager.",
+      "englishTranslit": "Manager jote maataadabeku",
+      "context": "Scheduling a 1-on-1 discussion."
+    },
+    {
+      "id": "workplace_8",
+      "scenarioId": "workplace",
+      "kannada": "ಧನ್ಯವಾದಗಳು, ಚೆನ್ನಾಗಿ ಕೆಲಸ ಮಾಡಿದ್ರಿ",
+      "english": "Thank you, you did great work!",
+      "englishTranslit": "Dhanyavaadagalu, chennaagi kelasa maadidri",
+      "context": "Appreciating a coworker's contribution."
+    },
+    {
+      "id": "daily_life_1",
+      "scenarioId": "daily_life",
+      "kannada": "ನಮಸ್ಕಾರ, ಹೇಗಿದ್ದೀರಾ?",
+      "english": "Hello, how are you?",
+      "englishTranslit": "Namaskaara, hegiddeera?",
+      "context": "The universal warm Karnataka greeting."
+    },
+    {
+      "id": "daily_life_2",
+      "scenarioId": "daily_life",
+      "kannada": "ಕಸದ ಗಾಡಿ ಬಂತಾ?",
+      "english": "Did the garbage vehicle come?",
+      "englishTranslit": "Kasada gaadi bantaa?",
+      "context": "Crucial daily apartment/locality question."
+    },
+    {
+      "id": "daily_life_3",
+      "scenarioId": "daily_life",
+      "kannada": "ಇವತ್ತು ಕರೆಂಟ್ ಇರಲ್ವಾ?",
+      "english": "Is there no electricity today?",
+      "englishTranslit": "Ivattu current iralvaa?",
+      "context": "Inquiring about BESCOM power cuts."
+    },
+    {
+      "id": "daily_life_4",
+      "scenarioId": "daily_life",
+      "kannada": "ನೀರು ಯಾವ ಟೈಮ್‌ಗೆ ಬರುತ್ತೆ?",
+      "english": "What time does the water come?",
+      "englishTranslit": "Neeru yaava time-ge barutte?",
+      "context": "Checking BWSSB water timing."
+    },
+    {
+      "id": "daily_life_5",
+      "scenarioId": "daily_life",
+      "kannada": "ಪಾರ್ಸೆಲ್ ರಿಸೀವ್ ಮಾಡ್ಕೊಳ್ತೀರಾ?",
+      "english": "Could you please receive my delivery parcel?",
+      "englishTranslit": "Parcel receive maadkolteera?",
+      "context": "Requesting a neighbour when you're away."
+    },
+    {
+      "id": "daily_life_6",
+      "scenarioId": "daily_life",
+      "kannada": "ಊಟ ಆಯ್ತಾ?",
+      "english": "Did you have lunch / dinner?",
+      "englishTranslit": "Oota aaytaa?",
+      "context": "The friendliest conversation starter in Karnataka culture."
+    },
+    {
+      "id": "daily_life_7",
+      "scenarioId": "daily_life",
+      "kannada": "ತುಂಬಾ ಧನ್ಯವಾದಗಳು",
+      "english": "Thank you very much.",
+      "englishTranslit": "Tumba dhanyavaadagalu",
+      "context": "Heartfelt gratitude to anyone who helped."
+    },
+    {
+      "id": "daily_life_8",
+      "scenarioId": "daily_life",
+      "kannada": "ಮತ್ತೆ ಸಿಗೋಣ",
+      "english": "See you again! Bye.",
+      "englishTranslit": "Matte sigona",
+      "context": "Warm goodbye."
+    },
+    {
+      "id": "daily_life_9",
+      "scenarioId": "daily_life",
+      "kannada": "ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ, ಸ್ವಲ್ಪ ನಿಧಾನವಾಗಿ ಮಾತನಾಡಿ",
+      "english": "I am learning Kannada, please speak a little slowly.",
+      "englishTranslit": "Kannada kaliyuttiddene, swalpa nidhaanavaagi maathanaadi",
+      "context": "Locals will love you for saying this!"
+    }
+  ]
+}

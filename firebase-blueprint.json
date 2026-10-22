@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information storing account details and preferred native language",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique Firebase Auth UID of the user",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name",
+          "maxLength": 128
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Profile picture URL",
+          "maxLength": 512
+        },
+        "nativeLanguage": {
+          "type": "string",
+          "description": "Selected native tongue code (hi, mr, bn, te, ta, en)",
+          "maxLength": 10
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of profile creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of profile update"
+        }
+      },
+      "required": ["userId", "email", "nativeLanguage"]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Stores user learning achievements, learned phrases, quiz scores, and unlocked badges",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique Firebase Auth UID of the user",
+          "maxLength": 128
+        },
+        "learnedPhraseIds": {
+          "type": "array",
+          "description": "List of phrase IDs marked as learned"
+        },
+        "completedScenarios": {
+          "type": "array",
+          "description": "List of completed scenario IDs"
+        },
+        "quizScores": {
+          "type": "object",
+          "description": "Map of scenarioId to quiz score objects"
+        },
+        "roleplayCompleted": {
+          "type": "array",
+          "description": "List of scenario IDs where roleplay dialogue was held"
+        },
+        "badges": {
+          "type": "array",
+          "description": "Unlocked cultural achievement badges"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of latest update"
+        }
+      },
+      "required": ["userId"]
+    },
+    "ChatThread": {
+      "title": "ChatThread",
+      "description": "A conversation thread with the multi-turn Gemini chatbot",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "roleId": {
+          "type": "string",
+          "description": "The persona identifier for the chatbot",
+          "maxLength": 64
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "messages": {
+          "type": "array",
+          "description": "Serialized messages in this thread"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "userId", "roleId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "User profile document indexed by Firebase Auth UID"
+    },
+    "/users/{userId}/progress/current": {
+      "schema": {
+        "$ref": "#/entities/UserProgress"
+      },
+      "description": "Active learning progress document for the user"
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": {
+        "$ref": "#/entities/ChatThread"
+      },
+      "description": "Multi-turn Gemini chatbot conversation threads"
+    }
+  }
+}
